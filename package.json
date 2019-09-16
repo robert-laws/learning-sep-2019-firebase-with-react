@@ -1,6 +1,20 @@
 {
   "name": "learning-sep-2019-firebase-with-react",
   "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robert-laws/learning-sep-2019-firebase-with-react.git"
+  },
+  "keywords": [
+    "react",
+    "firebase"
+  ],
+  "author": "Robert Laws",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robert-laws/learning-sep-2019-firebase-with-react/issues"
+  },
+  "homepage": "https://github.com/robert-laws/learning-sep-2019-firebase-with-react#readme",
   "private": true,
   "dependencies": {
     "bootstrap": "^4.3.1",
