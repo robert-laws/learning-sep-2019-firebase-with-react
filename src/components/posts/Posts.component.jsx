@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'reactstrap';
-import Post from '../post/Post.component';
+import Post from '../Post/Post.component';
 
 const Posts = ({posts}) => {
   return (

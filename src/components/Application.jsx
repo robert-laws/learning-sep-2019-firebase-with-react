@@ -1,5 +1,6 @@
 import React from 'react';
-import Posts from './posts/Posts.component';
+import Posts from './Posts/Posts.component';
+import AddPostForm from './AddPostForm/AddPostForm.component';
 
 import { Container, Row, Col } from 'reactstrap';
 
@@ -45,7 +46,17 @@ class Application extends React.Component {
     // data() - gets all of the fields on the object
     // get() - allows access to a particular property on the object
     // isEqual() - useful for comparisons
+  }
 
+  handleCreate = async post => {
+    const { posts } = this.state;
+
+    const docRef = await firestore.collection('posts').add(post);
+    const doc = await docRef.get();
+
+    const newPost = collectIdsAndDocs(doc);
+
+    this.setState({ posts: [newPost, ...posts]})
   }
 
   render() {
@@ -55,6 +66,11 @@ class Application extends React.Component {
         <Row>
           <Col sm="12">
             <h3>Blog Application with Firebase</h3>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm="12">
+            <AddPostForm onCreate={this.handleCreate} />
           </Col>
         </Row>
         <Posts posts={posts} />
