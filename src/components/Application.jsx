@@ -1,8 +1,8 @@
 import React from 'react';
 
-import './App.scss';
+import { firestore } from '../firebase/firebase-config';
 
-class App extends React.Component {
+class Application extends React.Component {
   constructor() {
     super();
 
@@ -28,11 +28,11 @@ class App extends React.Component {
           <div className={`box ${this.state.hidden ? 'fade-out' : 'fade-in'}`}>
             <span>Hello There...</span>
           </div>
-          <button onClick={this.hideBox}>Click Here</button>
+          <button onClick={this.hideBox}>{this.state.hidden ? 'Show Box' : 'Hide Box'}</button>
         </header>
       </div>
     )
   }
 }
 
-export default App;
+export default Application;
