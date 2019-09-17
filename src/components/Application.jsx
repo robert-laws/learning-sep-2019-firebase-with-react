@@ -12,12 +12,13 @@ class Application extends React.Component {
     posts: []
   }
 
+  unsubscribe = null;
+
   componentDidMount = async () => {
-    const snapshot = await firestore.collection('posts').get();
-
-    const posts = snapshot.docs.map(collectIdsAndDocs);
-
-    this.setState({ posts })
+    this.unsubscribe = firestore.collection('posts').onSnapshot(snapshot => {
+      const posts = snapshot.docs.map(collectIdsAndDocs);
+      this.setState({ posts });
+    })
 
     // QuerySnapshot Properties
     //
@@ -48,29 +49,8 @@ class Application extends React.Component {
     // isEqual() - useful for comparisons
   }
 
-  handleCreate = async post => {
-    const { posts } = this.state;
-
-    const docRef = await firestore.collection('posts').add(post);
-    const doc = await docRef.get();
-
-    const newPost = collectIdsAndDocs(doc);
-
-    this.setState({ posts: [newPost, ...posts]})
-  }
-
-  handleRemove = async id => {
-    const allPosts = this.state.posts;
-
-    await firestore.doc(`posts/${id}`).delete();
-
-    const posts = allPosts.filter(post => {
-      return post.id !== id
-    });
-
-    this.setState({ posts })
-
-    return true;
+  componentWillUnmount = () => {
+    this.unsubscribe();
   }
 
   render() {
@@ -84,10 +64,10 @@ class Application extends React.Component {
         </Row>
         <Row>
           <Col sm="12">
-            <AddPostForm onCreate={this.handleCreate} />
+            <AddPostForm />
           </Col>
         </Row>
-        <Posts posts={posts} onRemove={this.handleRemove} />
+        <Posts posts={posts} />
       </Container>
     )
   }

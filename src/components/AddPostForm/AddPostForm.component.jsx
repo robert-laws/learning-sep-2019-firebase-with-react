@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card } from 'reactstrap';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { firestore } from '../../firebase/firebase-config';
 
 class AddPostForm extends Component {
   state = {
@@ -18,7 +19,6 @@ class AddPostForm extends Component {
   handleSubmit = event => {
     event.preventDefault();
 
-    const { onCreate } = this.props;
     const { title, content } = this.state;
 
     const post = {
@@ -30,7 +30,7 @@ class AddPostForm extends Component {
       }
     }
 
-    onCreate(post);
+    firestore.collection('posts').add(post);
     
     this.setState({
       title: '',
