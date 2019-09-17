@@ -1,18 +1,22 @@
 import React from 'react';
+import Posts from './posts/Posts.component';
+
 import { Container, Row, Col } from 'reactstrap';
 
 import { firestore } from '../firebase/firebase-config';
+import { collectIdsAndDocs } from '../utilities/utilities';
 
 class Application extends React.Component {
+  state = {
+    posts: []
+  }
+
   componentDidMount = async () => {
     const snapshot = await firestore.collection('posts').get();
 
-    snapshot.forEach(doc => {
-      const id = doc.id;
-      const data = doc.data();
+    const posts = snapshot.docs.map(collectIdsAndDocs);
 
-      console.log({id, data})
-    })
+    this.setState({ posts })
 
     // QuerySnapshot Properties
     //
@@ -45,6 +49,7 @@ class Application extends React.Component {
   }
 
   render() {
+    const { posts } = this.state;
     return (
       <Container className="App">
         <Row>
@@ -52,6 +57,7 @@ class Application extends React.Component {
             <h3>Blog Application with Firebase</h3>
           </Col>
         </Row>
+        <Posts posts={posts} />
       </Container>
     )
   }
