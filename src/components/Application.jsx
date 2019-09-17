@@ -4,10 +4,15 @@ import { Container, Row, Col } from 'reactstrap';
 import { firestore } from '../firebase/firebase-config';
 
 class Application extends React.Component {
-  componentDidMount = () => {
-    const posts = firestore.collection('posts').get().then(snapshot => {
-      console.log({snapshot})
-    }); // retrieves all of the posts collection
+  componentDidMount = async () => {
+    const snapshot = await firestore.collection('posts').get();
+
+    snapshot.forEach(doc => {
+      const id = doc.id;
+      const data = doc.data();
+
+      console.log({id, data})
+    })
 
     // QuerySnapshot Properties
     //
@@ -37,9 +42,6 @@ class Application extends React.Component {
     // get() - allows access to a particular property on the object
     // isEqual() - useful for comparisons
 
-    
-
-    console.log({ posts })
   }
 
   render() {
