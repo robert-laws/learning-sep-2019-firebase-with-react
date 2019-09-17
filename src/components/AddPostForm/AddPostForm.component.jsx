@@ -27,7 +27,8 @@ class AddPostForm extends Component {
       user: {
         uid: 5678,
         displayName: 'Hal Hope'
-      }
+      },
+      stars: 0
     }
 
     firestore.collection('posts').add(post);

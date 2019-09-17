@@ -5,7 +5,13 @@
     font-weight: bold;
   }
 
-  .post-button {
+  .post-button, .star-button {
     width: 120px;
+  }
+
+  .footer-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
   }
 }
