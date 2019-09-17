@@ -1,36 +1,56 @@
 import React from 'react';
+import { Container, Row, Col } from 'reactstrap';
 
 import { firestore } from '../firebase/firebase-config';
 
 class Application extends React.Component {
-  constructor() {
-    super();
+  componentDidMount = () => {
+    const posts = firestore.collection('posts').get().then(snapshot => {
+      console.log({snapshot})
+    }); // retrieves all of the posts collection
 
-    this.state = {
-      hidden: false
-    }
-  }
+    // QuerySnapshot Properties
+    //
+    // docs - all the documents in the snapshot
+    // empty - true/false
+    // metadata
+    // query - reference to query you fired
+    // size - number of documents
 
-  hideBox = () => {
-    console.log('clicked...')
-    this.setState({
-      hidden: !this.state.hidden
-    })
+    // QuerySnapshot Methods
+    //
+    // docChanges() - array of changes
+    // forEach() - iterates over entire array of snapshots
+    // isEqual() - whether it matches another snapshot
+
+
+    // DocumentSnapshot Properties
+    //
+    // id - id of the given document
+    // exists - true/false
+    // metadata
+    // ref - reference to the documents location
+
+    // DocumentSnapshot Methods
+    //
+    // data() - gets all of the fields on the object
+    // get() - allows access to a particular property on the object
+    // isEqual() - useful for comparisons
+
+    
+
+    console.log({ posts })
   }
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1>
-            Firebase with React
-          </h1>
-          <div className={`box ${this.state.hidden ? 'fade-out' : 'fade-in'}`}>
-            <span>Hello There...</span>
-          </div>
-          <button onClick={this.hideBox}>{this.state.hidden ? 'Show Box' : 'Hide Box'}</button>
-        </header>
-      </div>
+      <Container className="App">
+        <Row>
+          <Col sm="12">
+            <h3>Blog Application with Firebase</h3>
+          </Col>
+        </Row>
+      </Container>
     )
   }
 }
