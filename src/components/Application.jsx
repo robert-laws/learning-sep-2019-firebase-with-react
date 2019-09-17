@@ -59,6 +59,20 @@ class Application extends React.Component {
     this.setState({ posts: [newPost, ...posts]})
   }
 
+  handleRemove = async id => {
+    const allPosts = this.state.posts;
+
+    await firestore.doc(`posts/${id}`).delete();
+
+    const posts = allPosts.filter(post => {
+      return post.id !== id
+    });
+
+    this.setState({ posts })
+
+    return true;
+  }
+
   render() {
     const { posts } = this.state;
     return (
@@ -73,7 +87,7 @@ class Application extends React.Component {
             <AddPostForm onCreate={this.handleCreate} />
           </Col>
         </Row>
-        <Posts posts={posts} />
+        <Posts posts={posts} onRemove={this.handleRemove} />
       </Container>
     )
   }
