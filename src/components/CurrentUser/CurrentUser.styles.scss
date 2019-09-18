@@ -1,0 +1,11 @@
+.current-user {
+  .card-title {
+    font-weight: bold;
+    margin: 10px 0 0;
+  }
+
+  .card-text {
+    display: flex;
+    flex-direction: column;
+  }
+}

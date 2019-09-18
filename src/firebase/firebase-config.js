@@ -6,7 +6,7 @@ const firebaseConfig = {
   authDomain: "learn-sep-2019-firebase-react.firebaseapp.com",
   databaseURL: "https://learn-sep-2019-firebase-react.firebaseio.com",
   projectId: "learn-sep-2019-firebase-react",
-  storageBucket: "",
+  storageBucket: "learn-sep-2019-firebase-react.appspot.com",
   messagingSenderId: "1017720467876",
   appId: "1:1017720467876:web:01cdcaae80f656971dd131"
 };

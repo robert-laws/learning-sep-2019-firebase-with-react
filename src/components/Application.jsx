@@ -6,10 +6,12 @@ import { Container, Row, Col } from 'reactstrap';
 
 import { firestore } from '../firebase/firebase-config';
 import { collectIdsAndDocs } from '../utilities/utilities';
+import CurrentUser from './CurrentUser/CurrentUser.component';
 
 class Application extends React.Component {
   state = {
-    posts: []
+    posts: [],
+    user: null
   }
 
   unsubscribe = null;
@@ -64,7 +66,10 @@ class Application extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col sm="12">
+          <Col sm="4">
+            <CurrentUser />
+          </Col>
+          <Col sm="8">
             <AddPostForm />
           </Col>
         </Row>
