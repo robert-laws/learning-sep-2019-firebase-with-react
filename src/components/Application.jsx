@@ -1,12 +1,12 @@
 import React from 'react';
 import Posts from './Posts/Posts.component';
 import AddPostForm from './AddPostForm/AddPostForm.component';
+import Authentication from './Authentication/Authentication.component';
 
 import { Container, Row, Col } from 'reactstrap';
 
-import { firestore } from '../firebase/firebase-config';
+import { firestore, auth } from '../firebase/firebase-config';
 import { collectIdsAndDocs } from '../utilities/utilities';
-import CurrentUser from './CurrentUser/CurrentUser.component';
 
 class Application extends React.Component {
   state = {
@@ -14,12 +14,17 @@ class Application extends React.Component {
     user: null
   }
 
-  unsubscribe = null;
+  unsubscribeFromFirestore = null;
+  unsubscribeFromAuth = null;
 
   componentDidMount = async () => {
-    this.unsubscribe = firestore.collection('posts').onSnapshot(snapshot => {
+    this.unsubscribeFromFirestore = firestore.collection('posts').onSnapshot(snapshot => {
       const posts = snapshot.docs.map(collectIdsAndDocs);
       this.setState({ posts });
+    });
+
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
+      this.setState({ user })
     })
 
     // QuerySnapshot Properties
@@ -52,11 +57,11 @@ class Application extends React.Component {
   }
 
   componentWillUnmount = () => {
-    this.unsubscribe();
+    this.unsubscribeFromFirestore();
   }
 
   render() {
-    const { posts } = this.state;
+    const { posts, user } = this.state;
     
     return (
       <Container className="App">
@@ -67,7 +72,7 @@ class Application extends React.Component {
         </Row>
         <Row>
           <Col sm="4">
-            <CurrentUser />
+            <Authentication user={user} />
           </Col>
           <Col sm="8">
             <AddPostForm />

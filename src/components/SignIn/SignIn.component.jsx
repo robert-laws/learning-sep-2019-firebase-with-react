@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card } from 'reactstrap';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { signInWithGoogle } from '../../firebase/firebase-config';
 
 class SignIn extends Component {
   state = {
@@ -34,14 +35,14 @@ class SignIn extends Component {
         <Form onSubmit={this.handleSubmit}>
           <FormGroup>
             <Label for="email">Email</Label>
-            <Input type="text" name="email" id="email" placeholder="enter your email" value={email} onChange={this.handleChange} />
+            <Input type="text" name="email" id="signInEmail" placeholder="enter your email" value={email} onChange={this.handleChange} />
           </FormGroup>
           <FormGroup>
             <Label for="password">Password</Label>
-            <Input type="password" name="password" id="password" placeholder="enter your password" value={password} onChange={this.handleChange} />
+            <Input type="password" name="password" id="signInPassword" placeholder="enter your password" value={password} onChange={this.handleChange} />
           </FormGroup>
-          <Button>Sign In</Button>
-          <Button>Sign In with Google</Button>
+          <Button className="mr-2">Sign In</Button>
+          <Button onClick={signInWithGoogle}>Sign In with Google</Button>
         </Form>
       </Card>
     )

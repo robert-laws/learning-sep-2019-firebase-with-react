@@ -3,6 +3,8 @@ import { Card, CardImg, CardText, CardTitle, Button } from 'reactstrap';
 
 import moment from 'moment';
 
+import { signOut } from '../../firebase/firebase-config';
+
 import './CurrentUser.styles.scss';
 
 const CurrentUser = ({ displayName, photoURL, email, createdAt, children }) => {
@@ -16,7 +18,7 @@ const CurrentUser = ({ displayName, photoURL, email, createdAt, children }) => {
           <span className="created-at">{moment(createdAt).calendar()}</span>
           <span>{children}</span>
         </CardText>
-        <Button color="primary">Sign Out</Button>
+        <Button color="primary" onClick={signOut}>Sign Out</Button>
       </Card>
     </>
   )
