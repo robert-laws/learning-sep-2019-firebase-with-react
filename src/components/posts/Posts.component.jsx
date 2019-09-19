@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Row, Col } from 'reactstrap';
 import Post from '../Post/Post.component';
+import { PostsContext } from '../../providers/PostsProvider';
 
-const Posts = ({ posts }) => {
+const Posts = () => {
+  const posts = useContext(PostsContext);
+  
   return (
     <Row>
       <Col>
-        {posts.map(post => (
-          <Post {...post} key={post.id} />
-        ))}
+        {posts.map(post => (<Post {...post} key={post.id} />))}
       </Col>
     </Row>
   )

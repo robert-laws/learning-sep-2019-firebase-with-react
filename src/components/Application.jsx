@@ -5,65 +5,37 @@ import Authentication from './Authentication/Authentication.component';
 
 import { Container, Row, Col } from 'reactstrap';
 
-import { firestore, auth, createUserProfileDocument } from '../firebase/firebase-config';
-import { collectIdsAndDocs } from '../utilities/utilities';
-
 class Application extends React.Component {
-  state = {
-    posts: [],
-    user: null
-  }
+ 
+  // QuerySnapshot Properties
+  //
+  // docs - all the documents in the snapshot
+  // empty - true/false
+  // metadata
+  // query - reference to query you fired
+  // size - number of documents
 
-  unsubscribeFromFirestore = null;
-  unsubscribeFromAuth = null;
-
-  componentDidMount = async () => {
-    this.unsubscribeFromFirestore = firestore.collection('posts').onSnapshot(snapshot => {
-      const posts = snapshot.docs.map(collectIdsAndDocs);
-      this.setState({ posts });
-    });
-
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      const user = await createUserProfileDocument(userAuth);
-       this.setState({ user })
-    })
-
-    // QuerySnapshot Properties
-    //
-    // docs - all the documents in the snapshot
-    // empty - true/false
-    // metadata
-    // query - reference to query you fired
-    // size - number of documents
-
-    // QuerySnapshot Methods
-    //
-    // docChanges() - array of changes
-    // forEach() - iterates over entire array of snapshots
-    // isEqual() - whether it matches another snapshot
+  // QuerySnapshot Methods
+  //
+  // docChanges() - array of changes
+  // forEach() - iterates over entire array of snapshots
+  // isEqual() - whether it matches another snapshot
 
 
-    // DocumentSnapshot Properties
-    //
-    // id - id of the given document
-    // exists - true/false
-    // metadata
-    // ref - reference to the documents location
+  // DocumentSnapshot Properties
+  //
+  // id - id of the given document
+  // exists - true/false
+  // metadata
+  // ref - reference to the documents location
 
-    // DocumentSnapshot Methods
-    //
-    // data() - gets all of the fields on the object
-    // get() - allows access to a particular property on the object
-    // isEqual() - useful for comparisons
-  }
+  // DocumentSnapshot Methods
+  //
+  // data() - gets all of the fields on the object
+  // get() - allows access to a particular property on the object
+  // isEqual() - useful for comparisons
 
-  componentWillUnmount = () => {
-    this.unsubscribeFromFirestore();
-  }
-
-  render() {
-    const { posts, user } = this.state;
-    
+  render() {    
     return (
       <Container className="App">
         <Row>
@@ -73,13 +45,13 @@ class Application extends React.Component {
         </Row>
         <Row>
           <Col sm="4">
-            <Authentication user={user} />
+            <Authentication />
           </Col>
           <Col sm="8">
             <AddPostForm />
           </Col>
         </Row>
-        <Posts posts={posts} />
+        <Posts />
       </Container>
     )
   }

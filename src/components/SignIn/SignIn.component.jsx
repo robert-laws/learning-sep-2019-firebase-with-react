@@ -27,7 +27,7 @@ class SignIn extends Component {
       
       getUserDocument(user.uid);
     } catch (error) {
-      console.error(error);
+      console.log('Error Logging Into Account:', error.message);
     }
 
     this.setState({

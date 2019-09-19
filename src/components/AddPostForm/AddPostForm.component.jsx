@@ -1,12 +1,22 @@
 import React, { Component } from 'react';
 import { Card } from 'reactstrap';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { firestore, auth } from '../../firebase/firebase-config';
+import { firestore, auth, createUserProfileDocument } from '../../firebase/firebase-config';
 
 class AddPostForm extends Component {
   state = {
     title: '',
-    content: ''
+    content: '',
+    user: null
+  }
+
+  unsubscribeFromAuth = null;
+
+  componentDidMount = async () => {   
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      const user = await createUserProfileDocument(userAuth);
+        this.setState({ user })
+    })
   }
 
   handleChange = event => {
@@ -20,7 +30,7 @@ class AddPostForm extends Component {
     event.preventDefault();
 
     const { title, content } = this.state;
-    const { uid, displayName, email, photoURL } = auth.currentUser || {};
+    const { uid, displayName, email, photoURL } = this.state.user;
 
     const post = {
       title,
