@@ -15,7 +15,7 @@ const CurrentUser = ({ displayName, photoURL, email, createdAt, children }) => {
         <CardTitle>{displayName}</CardTitle>
         <CardText>
           <span className="email">{email}</span>
-          <span className="created-at">{moment(createdAt).calendar()}</span>
+          <span className="created-at">{moment(createdAt.seconds*1000).calendar()}</span>
           <span>{children}</span>
         </CardText>
         <Button color="primary" onClick={signOut}>Sign Out</Button>

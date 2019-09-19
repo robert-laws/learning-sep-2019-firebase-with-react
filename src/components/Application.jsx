@@ -5,7 +5,7 @@ import Authentication from './Authentication/Authentication.component';
 
 import { Container, Row, Col } from 'reactstrap';
 
-import { firestore, auth } from '../firebase/firebase-config';
+import { firestore, auth, createUserProfileDocument } from '../firebase/firebase-config';
 import { collectIdsAndDocs } from '../utilities/utilities';
 
 class Application extends React.Component {
@@ -23,8 +23,9 @@ class Application extends React.Component {
       this.setState({ posts });
     });
 
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      this.setState({ user })
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      const user = await createUserProfileDocument(userAuth);
+       this.setState({ user })
     })
 
     // QuerySnapshot Properties

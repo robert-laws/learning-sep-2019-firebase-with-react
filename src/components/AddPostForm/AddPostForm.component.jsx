@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card } from 'reactstrap';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { firestore } from '../../firebase/firebase-config';
+import { firestore, auth } from '../../firebase/firebase-config';
 
 class AddPostForm extends Component {
   state = {
@@ -20,13 +20,17 @@ class AddPostForm extends Component {
     event.preventDefault();
 
     const { title, content } = this.state;
+    const { uid, displayName, email, photoURL } = auth.currentUser || {};
 
     const post = {
       title,
       content,
+      createdAt: new Date(),
       user: {
-        uid: 5678,
-        displayName: 'Hal Hope'
+        uid,
+        displayName,
+        email,
+        photoURL
       },
       stars: 0
     }

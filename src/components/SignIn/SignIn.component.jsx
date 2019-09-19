@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card } from 'reactstrap';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { signInWithGoogle } from '../../firebase/firebase-config';
+import { auth, signInWithGoogle, getUserDocument } from '../../firebase/firebase-config';
 
 class SignIn extends Component {
   state = {
@@ -17,8 +17,18 @@ class SignIn extends Component {
     })
   }
 
-  handleSubmit = event => {
+  handleSubmit = async event => {
     event.preventDefault();
+
+    const { email, password } = this.state;
+
+    try {
+      const { user } = await auth.signInWithEmailAndPassword(email, password);
+      
+      getUserDocument(user.uid);
+    } catch (error) {
+      console.error(error);
+    }
 
     this.setState({
       email: '',
