@@ -1,14 +1,15 @@
 import React from 'react';
-
+import { Card, CardBody, CardText, CardTitle } from 'reactstrap';
 import moment from 'moment';
 
 const Comment = ({ content, user, createdAt }) => {
   return (
-    <article className="Comment">
-      <span className="Comment--author">{user.displayName}</span>
-      <span className="Comment--content">{content}</span>
-      <span className="Comment--timestamp">{moment(createdAt).calendar()}</span>
-    </article>
+    <Card outline color="info" className="post-card">
+      <CardBody>
+        <CardTitle>Comment by {user.displayName} at {moment(createdAt).calendar()}</CardTitle>
+        <CardText>{content}</CardText>
+      </CardBody>
+    </Card>
   );
 };
 
