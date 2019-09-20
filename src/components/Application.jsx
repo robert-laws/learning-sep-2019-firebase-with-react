@@ -1,5 +1,5 @@
 import React from 'react';
-import Posts from './Posts/Posts.component';
+import Posts from './posts/Posts.component';
 import AddPostForm from './AddPostForm/AddPostForm.component';
 import Authentication from './Authentication/Authentication.component';
 

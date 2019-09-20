@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Row, Col } from 'reactstrap';
-import Post from '../Post/Post.component';
+import Post from '../post/Post.component';
 import { PostsContext } from '../../providers/PostsProvider';
 
 const Posts = () => {
