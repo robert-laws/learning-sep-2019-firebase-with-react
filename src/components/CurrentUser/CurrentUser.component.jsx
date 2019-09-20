@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardImg, CardText, CardTitle, Button } from 'reactstrap';
 
 import moment from 'moment';
@@ -12,7 +13,11 @@ const CurrentUser = ({ displayName, photoURL, email, createdAt, children }) => {
     <>
       <Card body className="current-user">         
         {photoURL && <CardImg top width="100%" src={photoURL} alt={displayName} />}
-        <CardTitle>{displayName}</CardTitle>
+        <CardTitle>
+          <Link to="/profile">
+            {displayName}
+          </Link>
+        </CardTitle>
         <CardText>
           <span className="email">{email}</span>
           <span className="created-at">{moment(createdAt.seconds*1000).calendar()}</span>

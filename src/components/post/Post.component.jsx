@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Card, CardBody, CardText, CardTitle, CardSubtitle, CardFooter } from 'reactstrap';
 import { Button, Spinner } from 'reactstrap';
+import { Link } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa';
 import './Post.styles.scss';
 
@@ -36,7 +37,9 @@ const Post = ({ id, title, content, user, stars }) => {
   return (
     <Card outline color="info" className="post-card">
       <CardBody>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle>
+          <Link to={`/posts/${id}`}>{title}</Link>
+        </CardTitle>
         <CardSubtitle>by {user.displayName}</CardSubtitle>
         <CardText>{content}</CardText>
       </CardBody>

@@ -1,9 +1,12 @@
 import React from 'react';
-import Posts from './posts/Posts.component';
-import AddPostForm from './AddPostForm/AddPostForm.component';
+import Posts from './Posts/Posts.component';
+import PostPage from './PostPage/PostPage.component';
 import Authentication from './Authentication/Authentication.component';
 
 import { Container, Row, Col } from 'reactstrap';
+
+import { Switch, Route, Link } from 'react-router-dom';
+import UserProfile from './UserProfile/UserProfile.component';
 
 class Application extends React.Component {
  
@@ -40,18 +43,23 @@ class Application extends React.Component {
       <Container className="App">
         <Row>
           <Col sm="12">
-            <h3>Blog Application with Firebase</h3>
+            <Link to="/">
+              <h3>Blog Application with Firebase</h3>
+            </Link>
           </Col>
         </Row>
         <Row>
           <Col sm="4">
             <Authentication />
           </Col>
-          <Col sm="8">
-            <AddPostForm />
+          <Col sm="12">
+            <Switch>
+              <Route exact path="/" component={Posts} />
+              <Route exact path="/profile" component={UserProfile} />
+              <Route exact path="/posts/:id" component={PostPage} />
+            </Switch>
           </Col>
         </Row>
-        <Posts />
       </Container>
     )
   }
