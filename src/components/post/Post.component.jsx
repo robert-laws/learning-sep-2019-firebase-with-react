@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Card, CardBody, CardText, CardTitle, CardSubtitle, CardFooter } from 'reactstrap';
 import { Button, Spinner } from 'reactstrap';
 import { FaStar } from 'react-icons/fa';
 import './Post.styles.scss';
 
 import { firestore } from '../../firebase/firebase-config';
+import { UserContext } from '../../providers/UserProvider';
+
+const belongsToCurrentUser = (currentUser, postAuthor) => {
+  if(!currentUser) return false;
+  return currentUser.uid === postAuthor.uid
+}
+
 
 const Post = ({ id, title, content, user, stars }) => {
+  const currentUser = useContext(UserContext);
   const [complete, setComplete] = useState(true);
   const postRef = firestore.doc(`posts/${id}`);
   const remove = () => {
@@ -40,9 +48,11 @@ const Post = ({ id, title, content, user, stars }) => {
           <Button className="star-button mr-2" color="primary" onClick={addStar}>
             {complete ? `Add Star` : <Spinner color="light" size="sm" />}
           </Button>
-          <Button className="post-button" color="danger" onClick={remove}>
-            Delete
-          </Button>
+          {belongsToCurrentUser(currentUser, user) &&
+            <Button className="post-button" color="danger" onClick={remove}>
+              Delete
+            </Button>
+          }
         </section>
       </CardFooter>
     </Card>
